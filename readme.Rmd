@@ -16,7 +16,8 @@ library(tidyr)
 This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [purrr](https://github.com/tidyverse/purrr), [tidyr](http://tidyr.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) will be explored, to pass functions into data frame objects. Practice 2 I will practice the use of package [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
 The true value of using purrr::map to pass functions within data.frame objects is that passing around dynamic varible is possible. I havent succeeded to do the same with data.table objects, so any help on this will be welcomed
 
-Practice 1 starts with ...
+### Practice 1 
+Practice 1 starts with using nesting function tidyr::nest, to group rows within the same categories of 'cyl'
 ```{r}
 mtcars %>% group_by(cyl)%>%nest()
 ```
@@ -34,8 +35,8 @@ trait_model<-function(df,x.var,y.var){
 
 
 And use purrr::map to 
-- pass function trait_model to the dataframe colum 'data' create new column 'model', 
-- then to pass function broom::glance to the column 'model' for creating another new column 'summary'.
+1. pass function trait_model to the dataframe colum 'data' create new column 'model', 
+2. then to pass function broom::glance to the column 'model' for creating another new column 'summary'.
 ```{r}
 groupby_mtcars %<>% 
   mutate(
@@ -53,8 +54,10 @@ groupby_mtcars %>% head
 
 ```
 
-use of purrr:map on data.frame has particular advantage to pass dynamic variables for models 
-for example, I want to build linear model where the response variable is mpg, with mulitple explanatory varibles: 
+### Passing dynamic variables to dynamic functions 
+
+The use of purrr:map on data.frame has particular advantage to pass dynamic variables for models. 
+For example, say we want to build linear model where the response variable is mpg, with mulitple explanatory varibles: 
 ```{r}
 
 var.list=c("wt","hp","drat","qsec") #passing variables 
@@ -86,8 +89,22 @@ for (v in var.list){
   model_mtcars[[v]]$modelxy<-sprintf("mpg~%s",v)
 }
 
-model_mtcars<-do.call("rbind",model_mtcars)
+model_mtcars
+
 ``` 
+
+```{r}
+model_mtcars<-do.call("rbind",model_mtcars)
+model_mtcars
+```
+
+```{r}
+model_mtcars%>%unnest(glance)
+```
+
+```{r}
+model_mtcars%>%unnest(tidy)
+```
 
 
 Practice 2 starts with ...

@@ -12,7 +12,7 @@ library(broom)
 library(tidyr)
 ```
 
-## R Functional Programming 
+## R Functional Programming, inspired by [plotcon talk](https://rstudio-pubs-static.s3.amazonaws.com/237010_6d37553296a34a6c899f2660911f1b17.html) 
 This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [purrr](https://github.com/tidyverse/purrr), [tidyr](http://tidyr.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) will be explored, to pass functions into data frame objects. Practice 2 I will practice the use of package [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
 
 Practice 1 starts with ...

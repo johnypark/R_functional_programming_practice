@@ -4,7 +4,7 @@ readme
 R Functional Programming
 ------------------------
 
-This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package tidyr and broom will be explored, to pass functions, to tidy dataset using data frame. Practice 2 I will practice the use of package data.table along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.
+This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [purrr](https://github.com/tidyverse/purrr), [tidyr](http://tidyr.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) will be explored, to pass functions into data frame objects. Practice 2 I will practice the use of package [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.
 
 Practice 1 starts with ...
 
@@ -19,31 +19,41 @@ mtcars %>% group_by(cyl)%>%nest()
     ## 2     4 <tibble [11 x 10]>
     ## 3     8 <tibble [14 x 10]>
 
-And the final product is...
+definde function trait\_model
 
 ``` r
 groupby_mtcars<-mtcars %>% group_by(cyl)%>%nest()
 
 trait_model<-function(df,x.var,y.var){
-  df %$%loess(.[[y.var]]~.[[x.var]])  
+  df %$%lm(.[[y.var]]~.[[x.var]])  
 }
+```
 
-groupby_mtcars %>% 
+And use purrr::map to - pass function trait\_model to the dataframe colum 'data' create new column 'model', - then to pass function broom::glance to the column 'model' for creating another new column 'summary'.
+
+``` r
+groupby_mtcars %<>% 
   mutate(
     
-    model=data%>%map(trait_model,"wt","mpg")
-    
+    model=data%>%map(trait_model,"wt","mpg"),
+    summary=model%>%map(broom::glance)
     
     
   )
 ```
 
-    ## # A tibble: 3 x 3
-    ##     cyl               data       model
-    ##   <dbl>             <list>      <list>
-    ## 1     6  <tibble [7 x 10]> <S3: loess>
-    ## 2     4 <tibble [11 x 10]> <S3: loess>
-    ## 3     8 <tibble [14 x 10]> <S3: loess>
+Now groupby\_mtcars looks like this:
+
+``` r
+groupby_mtcars %>% head
+```
+
+    ## # A tibble: 3 x 4
+    ##     cyl               data    model               summary
+    ##   <dbl>             <list>   <list>                <list>
+    ## 1     6  <tibble [7 x 10]> <S3: lm> <data.frame [1 x 11]>
+    ## 2     4 <tibble [11 x 10]> <S3: lm> <data.frame [1 x 11]>
+    ## 3     8 <tibble [14 x 10]> <S3: lm> <data.frame [1 x 11]>
 
 Practice 2 starts with ...
 

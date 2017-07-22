@@ -13,31 +13,46 @@ library(tidyr)
 ```
 
 ## R Functional Programming 
-This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [tidyr] and [broom] will be explored, to pass functions, to tidy dataset using data frame. Practice 2 I will practice the use of [package data.table] along with [package broom]. [data.table] is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
+This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [purrr](https://github.com/tidyverse/purrr), [tidyr](http://tidyr.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) will be explored, to pass functions into data frame objects. Practice 2 I will practice the use of package [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
 
 Practice 1 starts with ...
 ```{r}
 mtcars %>% group_by(cyl)%>%nest()
 ```
 
-And the final product is...
+definde function trait_model
 
 ```{r}
 groupby_mtcars<-mtcars %>% group_by(cyl)%>%nest()
 
 trait_model<-function(df,x.var,y.var){
-  df %$%loess(.[[y.var]]~.[[x.var]])  
+  df %$%lm(.[[y.var]]~.[[x.var]])  
 }
 
-groupby_mtcars %>% 
+```
+
+
+And use purrr::map to 
+- pass function trait_model to the dataframe colum 'data' create new column 'model', 
+- then to pass function broom::glance to the column 'model' for creating another new column 'summary'.
+```{r}
+groupby_mtcars %<>% 
   mutate(
     
-    model=data%>%map(trait_model,"wt","mpg")
-    
+    model=data%>%map(trait_model,"wt","mpg"),
+    summary=model%>%map(broom::glance)
     
     
   )
+
 ```
+Now groupby_mtcars looks like this:
+```{r}
+groupby_mtcars %>% head
+
+```
+
+
 
 Practice 2 starts with ...
 ```{r}

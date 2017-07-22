@@ -56,6 +56,40 @@ groupby_mtcars %>% head
     ## 2     4 <tibble [11 x 10]> <S3: lm> <data.frame [1 x 11]>
     ## 3     8 <tibble [14 x 10]> <S3: lm> <data.frame [1 x 11]>
 
+use of purrr:map on data.frame has particular advantage to pass dynamic variables for models for example, I want to build linear model where the response variable is mpg, with mulitple explanatory varibles:
+
+``` r
+var.list=c("wt","hp","drat","qsec") #passing variables 
+```
+
+Now, we are going to create a list instead of a data frame, or a data table, to store multiple models:
+
+``` r
+##create a list to store data
+model_mtcars<-list()
+```
+
+Next, we are going to pass those variables on the list to build multiple models using function: trait\_model
+
+``` r
+groupby_mtcars<-mtcars %>% group_by(cyl)%>%nest()
+for (v in var.list){
+  
+  model_mtcars[[v]]<-groupby_mtcars %>% 
+  mutate(
+    
+    model=data%>%map(trait_model,v,"mpg"),
+    glance=model%>%map(broom::glance),
+    tidy   = map(model, broom::tidy)
+    
+    
+  )
+  model_mtcars[[v]]$modelxy<-sprintf("mpg~%s",v)
+}
+
+model_mtcars<-do.call("rbind",model_mtcars)
+```
+
 Practice 2 starts with ...
 
 ``` r

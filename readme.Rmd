@@ -64,8 +64,8 @@ var.list=c("wt","hp","drat","qsec") #passing variables
 
 Now, we are going to create a list instead of a data frame, or a data table, to store multiple models:
 ```{r}
-##create a list to store data
-model_mtcars<-list()
+
+model_mtcars<-list() #create a list to store data
 ```
 
 

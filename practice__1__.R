@@ -31,17 +31,26 @@ model_mtcars%>%unnest(model) ##does not work
 
 
 
-
-model_mtcars<-mtcars %>% group_by(cat)%>% nest() %>%
+model_mtcars<-list()
+factors.list=c("cyl","vs","am","gear","carb")
+var.list=c("wt","hp","drat","qsec")
+for (v in var.list){
+  
+  model_mtcars[[v]]<-groupby_mtcars %>% 
   mutate(
     
-    model=data%>%map(trait_model,"wt","mpg") %>%map(summary)
-    
+    model=data%>%map(trait_model,v,"mpg"),
+    glance=model%>%map(broom::glance),
+    tidy   = map(model, broom::tidy)
     
     
   )
+  model_mtcars[[v]]$modelxy<-sprintf("mpg~%s",v)
+}
 
-model_mtcars 
+model_mtcars<-do.call("rbind",model_mtcars)
+  
+  
 
+  
 
-mtcars[[""]]

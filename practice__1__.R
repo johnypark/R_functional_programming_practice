@@ -28,12 +28,15 @@ model_mtcars<-groupby_mtcars %>%
 model_mtcars%>%unnest(glance)
 model_mtcars%>%unnest(tidy)
 model_mtcars%>%unnest(model) ##does not work
+factors.list=c("cyl","am","gear")
 
 
-
+##passing dynamic variables 
 model_mtcars<-list()
-factors.list=c("cyl","vs","am","gear","carb")
-var.list=c("wt","hp","drat","qsec")
+
+var.list=c("wt","hp","drat","qsec") #passing variables 
+
+groupby_mtcars<-mtcars %>% group_by(cyl)%>%nest()
 for (v in var.list){
   
   model_mtcars[[v]]<-groupby_mtcars %>% 

@@ -13,7 +13,7 @@ library(tidyr)
 ```
 
 ## R Functional Programming 
-This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package tidyr and broom will be explored, to pass functions, to tidy dataset using data frame. Practice 2 I will practice the use of package data.table along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
+This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [tidyr] and [broom] will be explored, to pass functions, to tidy dataset using data frame. Practice 2 I will practice the use of [package data.table] along with [package broom]. [data.table] is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
 
 Practice 1 starts with ...
 ```{r}

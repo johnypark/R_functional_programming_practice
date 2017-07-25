@@ -66,7 +66,7 @@ for(model.name in model.lists){
   x.name<-model.name%>%strsplit(.,"~")%>%.[[1]]%>%.[2]
   Fig.bymodel[[v]]<-model_mtcars%>%filter(modelxy==model.name)%>%
     unnest(data)%>%
-    ggplot(aes_string(x=x.name,y=y.name))+geom_point()
+    ggplot(aes_string(x=x.name,y=y.name,color="cyl"))+geom_point()+geom_smooth(method="lm")
   
   
 }

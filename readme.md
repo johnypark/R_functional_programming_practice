@@ -193,6 +193,31 @@ model_mtcars%>%unnest(tidy)
     ## 10     4  mpg~hp  .[[x.var]] -0.112775888 0.06118248 -1.8432709
     ## # ... with 14 more rows, and 1 more variables: p.value <dbl>
 
+### Usage of model\_mtcars
+
+Lots of potential here with this dataframe object! It includes data, model and summary all together within one chunck of table. Now model\_mtcars dataframe object which include data, model, and summary can be used to easily generate plots with all models that included in the dataset, without calling extra functions, using only ggplot and the dataframe object.For example,
+
+``` r
+model_mtcars$modelxy%>%unique->model.lists
+
+Fig.bymodel<-list()
+v=0;
+for(model.name in model.lists){
+  v=v+1
+  y.name<-model.name%>%strsplit(.,"~")%>%.[[1]]%>%.[1]
+  x.name<-model.name%>%strsplit(.,"~")%>%.[[1]]%>%.[2]
+  Fig.bymodel[[v]]<-model_mtcars%>%filter(modelxy==model.name)%>%
+    unnest(data)%>%
+    ggplot(aes_string(x=x.name,y=y.name))+geom_point()
+  
+  
+}
+
+  cowplot::plot_grid(plotlist=Fig.bymodel,labels=c("A","B","C","D"))
+```
+
+![](readme_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png)
+
 Practice 2 starts with ...
 
 ``` r
@@ -206,12 +231,5 @@ mtcars %>%data.table %>%head
     ## 4: 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
     ## 5: 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
     ## 6: 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
-
-Including Plots
----------------
-
-You can also embed plots, for example:
-
-![](readme_files/figure-markdown_github-ascii_identifiers/pressure-1.png)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

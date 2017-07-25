@@ -5,12 +5,11 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(magrittr)
-library(tidyverse)
-library(data.table)
-library(broom)
-library(tidyr)
+source("required.packages.R")
+read_chunk('practice__1__.R')
 ```
+
+
 
 ## R Functional Programming, inspired by [plotcon talk](https://rstudio-pubs-static.s3.amazonaws.com/237010_6d37553296a34a6c899f2660911f1b17.html) 
 This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [purrr](https://github.com/tidyverse/purrr), [tidyr](http://tidyr.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) will be explored, to pass functions into data frame objects. Practice 2 I will practice the use of package [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
@@ -106,18 +105,41 @@ model_mtcars%>%unnest(glance)
 model_mtcars%>%unnest(tidy)
 ```
 
+### Usage of model_mtcars
+Lots of potential here with this dataframe object! It includes data, model and summary all together within one chunck of table. Now model_mtcars dataframe object which include data, model, and summary can be used to easily generate plots with all models that included in the dataset, without calling extra functions, using only ggplot and the dataframe object.For example,
+
+```{r}
+
+<<plotting_model_mtcars>>
+  
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Practice 2 starts with ...
 ```{r}
 mtcars %>%data.table %>%head
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

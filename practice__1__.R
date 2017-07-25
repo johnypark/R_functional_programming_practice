@@ -19,8 +19,8 @@ model_mtcars<-groupby_mtcars %>%
   mutate(
     
     model=data%>%map(trait_model,"wt","mpg"),
-    glance=model%>%map(broom::glance),
-    tidy   = map(model, broom::tidy)
+    summary=model%>%map(summary),
+   # rsq=summary%>%map_dbl(r.squared)
     
     
   )

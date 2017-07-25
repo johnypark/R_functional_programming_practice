@@ -12,11 +12,11 @@ read_chunk('practice__1__.R')
 
 
 ## R Functional Programming, inspired by [plotcon talk](https://rstudio-pubs-static.s3.amazonaws.com/237010_6d37553296a34a6c899f2660911f1b17.html) 
-This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [purrr](https://github.com/tidyverse/purrr), [tidyr](http://tidyr.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) will be explored, to pass functions into data frame objects. Practice 2 I will practice the use of package [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) along with package broom. data.table is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
-The true value of using purrr::map to pass functions within data.frame objects is that passing around dynamic varible is possible. I havent succeeded to do the same with data.table objects, so any help on this will be welcomed
+This repository is to practice R Functional Programming. It will consist of series of practices. In practice 1, the use of package [purrr](https://github.com/tidyverse/purrr), [tidyr](http://tidyr.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) will be explored, to pass functions into data frame objects. Practice 2 I will practice the use of package [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) along with package `broom`. `data.table` is underrepresented package that not only gives wide variety of applications in data wrangling, but also gives users fast data processing speed.  
+The true value of using `purrr::map` to pass functions within `data.frame` objects is that passing around dynamic varible is possible. I havent succeeded to do the same with `data.table` objects, so any help on this will be welcomed
 
 ### Practice 1 
-Practice 1 starts with using nesting function tidyr::nest, to group rows within the same categories of 'cyl'
+Practice 1 starts with using nesting function `tidyr::nest`, to group rows within the same categories of 'cyl'
 ```{r}
 mtcars %>% group_by(cyl)%>%nest()
 ```
@@ -33,7 +33,7 @@ trait_model<-function(df,x.var,y.var){
 ```
 
 
-And use purrr::map to 
+And use `purrr::map` to 
 1. pass function trait_model to the dataframe colum 'data' create new column 'model', 
 2. then to pass function broom::glance to the column 'model' for creating another new column 'summary'.
 ```{r}
@@ -55,7 +55,7 @@ groupby_mtcars %>% head
 
 ### Passing dynamic variables to dynamic functions 
 
-The use of purrr:map on data.frame has particular advantage to pass dynamic variables for models. 
+The use of `purrr:map` on `data.frame` has particular advantage to pass dynamic variables for models. 
 For example, say we want to build linear model where the response variable is mpg, with mulitple explanatory varibles: 
 ```{r}
 
@@ -64,14 +64,14 @@ var.list=c("wt","hp","drat","qsec") #passing variables
 
 ```
 
-Now, we are going to create a list instead of a data frame, or a data table, to store multiple models:
+Now, we are going to create a list instead of a `dataframe`, or a `datatable`, to store multiple models:
 ```{r}
 
 model_mtcars<-list() #create a list to store data
 ```
 
 
-Next, we are going to pass those variables on the list to build multiple models using function: trait_model
+Next, we are going to pass those variables on the list to build multiple models using function: `trait_model`
 ```{r, echo=TRUE}
 groupby_mtcars<-mtcars %>% group_by(cyl)%>%nest()
 for (v in var.list){
@@ -106,7 +106,7 @@ model_mtcars%>%unnest(tidy)
 ```
 
 ### Usage of model_mtcars
-Lots of potential here with this dataframe object! It includes data, model and summary all together within one chunck of table. Now model_mtcars dataframe object which include data, model, and summary can be used to easily generate plots with all models that included in the dataset, without calling extra functions, using only ggplot and the dataframe object.For example,
+Lots of potential here with this `dataframe` object! It includes data, model and summary all together within one chunck of table. Now `model_mtcars` `dataframe` object which include data, model, and summary can be used to easily generate plots with all models that included in the dataset, without calling extra functions, using only `ggplot` and the `dataframe` object. For example,
 
 ```{r}
 

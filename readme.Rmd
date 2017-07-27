@@ -21,7 +21,7 @@ Practice 1 starts with using nesting function `tidyr::nest`, to group rows withi
 mtcars %>% group_by(cyl)%>%nest()
 ```
 
-definde function trait_model
+definde function `trait_model`
 
 ```{r}
 groupby_mtcars<-mtcars %>% group_by(cyl)%>%nest()
@@ -47,7 +47,7 @@ groupby_mtcars %<>%
   )
 
 ```
-Now groupby_mtcars looks like this:
+Now `groupby_mtcars` looks like this:
 ```{r}
 groupby_mtcars %>% head
 

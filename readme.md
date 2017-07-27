@@ -22,7 +22,7 @@ mtcars %>% group_by(cyl)%>%nest()
     ## 2     4 <tibble [11 x 10]>
     ## 3     8 <tibble [14 x 10]>
 
-definde function trait\_model
+definde function `trait_model`
 
 ``` r
 groupby_mtcars<-mtcars %>% group_by(cyl)%>%nest()
@@ -45,7 +45,7 @@ groupby_mtcars %<>%
   )
 ```
 
-Now groupby\_mtcars looks like this:
+Now `groupby_mtcars` looks like this:
 
 ``` r
 groupby_mtcars %>% head
